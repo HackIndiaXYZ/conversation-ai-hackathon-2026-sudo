@@ -1,0 +1,57 @@
+# ============================================
+# AI Healthcare Avatar Platform
+# Docker Compose with Ollama in Container
+# ============================================
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.ollama.yml up -d
+#
+# This variant includes Ollama running inside Docker
+# Requires:
+#   - Docker with GPU support (for NVIDIA GPUs)
+#   - OR CPU-only mode (slower)
+# ============================================
+
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      # Point to Ollama container instead of host
+      - OLLAMA_URL=http://ollama:11434
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: avatar-ollama
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - avatar-network
+    restart: unless-stopped
+    # GPU support (NVIDIA) - uncomment if you have NVIDIA GPU
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    # Auto-pull phi3 model on first start
+    entrypoint: >
+      sh -c "
+        /bin/ollama serve &
+        sleep 10
+        /bin/ollama pull phi3
+        wait
+      "
+
+volumes:
+  ollama_data:
+    driver: local

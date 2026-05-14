@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434'
+const OLLAMA_BASE_URL = process.env.OLLAMA_URL || process.env.OLLAMA_BASE_URL || 'http://localhost:11434'
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'phi3'
 
 // Healthcare Persona System Prompts - Optimized for phi3 (concise, clear)

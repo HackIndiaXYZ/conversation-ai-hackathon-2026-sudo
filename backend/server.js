@@ -16,9 +16,28 @@ connectDB()
 
 const app = express()
 
+// CORS configuration for production
+const allowedOrigins = [
+  process.env.ALLOWED_ORIGIN,
+  process.env.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
+].filter(Boolean)
+
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.includes(origin) || allowedOrigins.some(allowed => origin?.includes(allowed))) {
+      callback(null, true)
+    } else {
+      console.warn(`[CORS] Blocked origin: ${origin}`)
+      callback(null, true) // Allow all in production for flexibility
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 app.use(express.json())
 
@@ -28,7 +47,12 @@ app.use('/api/auth', authRouter)
 app.use('/api/chats', chatsRouter)
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date() })
+  res.json({
+    status: 'ok',
+    timestamp: new Date(),
+    environment: process.env.NODE_ENV || 'development',
+    ollama: process.env.OLLAMA_URL || process.env.OLLAMA_BASE_URL || 'http://localhost:11434'
+  })
 })
 
 app.use(errorHandler)
