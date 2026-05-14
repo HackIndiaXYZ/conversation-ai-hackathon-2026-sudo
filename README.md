@@ -70,3 +70,60 @@ GEMINI_API_KEY=your_gemini_key
 # Start both frontend and backend in development mode
 npm run dev
 ```
+# Docker Setup
+
+## Prerequisites
+
+* Docker Desktop
+* Ollama installed
+* phi3 model downloaded
+
+## Start Ollama
+
+```bash
+ollama run phi3
+```
+
+## Run Platform
+
+```bash
+docker compose up
+```
+
+## Open App
+
+```text
+http://localhost
+```
+
+# Avatar Chatbot
+
+An interactive avatar chatbot with customizable characters and AI-powered responses.
+
+## ✨ Features
+- **Swirl Selection**: Cycle through multiple characters including Human, Cat, and SpongeBob.
+- **Dynamic Animations**: Characters react and move when speaking.
+- **Glassmorphic UI**: Beautiful, modern interface with Light and Dark mode support.
+- **State Persistence**: Your preferences and chat history are saved to your profile automatically.
+- **Multi-AI Support**: Seamless fallback between local LLMs (Ollama) and cloud providers.
+
+## 🛠️ Tech Stack
+### Frontend
+- Framework: React 18 with Vite
+- Routing: React Router Dom
+- Icons: Lucide React
+- Styling: Modern CSS (Glassmorphism, Variables, Keyframe Animations)
+
+### Backend
+- Runtime: Node.js
+- Framework: Express.js
+- Authentication: JWT & BcryptJS
+- Validation: Express Validator
+
+### Database
+- Primary: MongoDB Atlas (NoSQL)
+- Integration: Native MongoDB Node.js Driver
+
+### AI Services
+- Local: Ollama
+- Cloud (Fallbacks): Anthropic, OpenAI, Google Gemini
