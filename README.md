@@ -1,6 +1,8 @@
 # Avatar Chatbot
 
 An interactive avatar chatbot with customizable characters and AI-powered responses.
+#Demo video
+https://youtu.be/RIyPGtvp3Os
 
 ## ✨ Features
 - **Swirl Selection**: Cycle through multiple characters including Human, Cat, and SpongeBob.
