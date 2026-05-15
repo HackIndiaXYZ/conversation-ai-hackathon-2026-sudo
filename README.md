@@ -1,5 +1,7 @@
 # Avatar Chatbot
 
+<img width="1536" height="1024" alt="WhatsApp Image 2026-05-15 at 3 33 22 AM" src="https://github.com/user-attachments/assets/8cd781cf-cba7-4617-bae3-4d169b16cfef" />
+
 An interactive avatar chatbot with customizable characters and AI-powered responses.
 #Demo video
 https://youtu.be/RIyPGtvp3Os
